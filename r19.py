@@ -71,6 +71,14 @@ if bd_max_date.t_s < dt.datetime.now().date() and txt_max_date == (dt.datetime.n
                 MP_DATE = dt.datetime.strptime(MP_DATE, '%d.%m.%Y')
 
                 cursor_a.execute('insert into FACT_AVG_RR(MP_CODE, BANK, MP_DATE, FACT_AVG_RR, TS) values(?, ?, ?, ?, ?)', MP_CODE, BANK, MP_DATE, FACT_AVG_RR, TS)
-                con_a.commit()
+                # con_a.commit()
+
+    # записываем данные в таблицу REST_KS
+        for x in lst_date:
+            KS_DATE = dt.datetime.strftime(x, '%d.%m.%Y')
+            KS_DATE = dt.datetime.strptime(KS_DATE, '%d.%m.%Y')
+
+            cursor_a.execute('insert into REST_KS(KS_DATE, BANK, KS_REST) values(?, ?, ?)', KS_DATE, BANK, FACT_AVG_RR)
+            con_a.commit()
 
 print('Финиш')
